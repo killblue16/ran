@@ -1,7 +1,8 @@
-import { next } from '@vercel/functions';
+// middleware.js
+import { NextResponse } from 'next/server';
 
-export default function middleware(req) {
-  return next({
+export function middleware(request) {
+  return NextResponse.next({
     headers: {
       'Referrer-Policy': 'origin-when-cross-origin',
       'X-Frame-Options': 'DENY',
@@ -9,3 +10,10 @@ export default function middleware(req) {
       'X-DNS-Prefetch-Control': 'on',
       'Strict-Transport-Security':
         'max-age=31536000; includeSubDomains; preload',
+    },
+  });
+}
+
+export const config = {
+  matcher: '/:path*',
+};
