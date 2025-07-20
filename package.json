@@ -1,8 +1,74 @@
-{
-  "private": true,
-  "dependencies": {
-    "next": "14.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  }
-}
+-- check for these
+	local steppedConn = RunService.Stepped:Connect(function(_, worldDt: number)
+		table.insert(connections, player.CharacterAdded:Connect(characterAdded))
+		table.insert(connections, player.CharacterRemoving:Connect(characterRemoving))
+		self.activeOcclusionModule:OnCameraSubjectChanged((game.Workspace.CurrentCamera :: Camera).CameraSubject)
+		player.DevComputerCameraMode == Enum.DevComputerCameraMovementMode.UserChoice then
+	local computerMovementMode = CameraUtils.ConvertCameraModeEnumToStandard(UserGameSettings.ComputerCameraMovementMode)
+	return CameraUtils.ConvertCameraModeEnumToStandard(computerMovementMode)
+	local stateChangedConn = humanoid.StateChanged:Connect(function(_, state)
+elseif object:IsA('Tool') then
+	if self.toolDescendantAddedConns[object] then self.toolDescendantAddedConns[object]:Disconnect() end
+	self.toolDescendantAddedConns[object] = object.DescendantAdded:Connect(function(toolChild)
+		self.cachedParts[toolChild] = nil
+		local processedRotation = vehicleCameraCore:step(dt, pitchVel, yawVel, firstPerson)
+else
+	return CameraUtils.ConvertCameraModeEnumToStandard(player.DevComputerCameraMode)
+	player.DevComputerCameraMode == Enum.DevComputerCameraMovementMode.UserChoice then
+	local computerMovementMode = CameraUtils.ConvertCameraModeEnumToStandard(UserGameSettings.ComputerCameraMovementMode)
+	return CameraUtils.ConvertCameraModeEnumToStandard(computerMovementMode)
+else
+	return CameraUtils.ConvertCameraModeEnumToStandard(player.DevComputerCameraMode)
+	local hitPart, hitPoint, hitNormal = workspace:FindPartOnRayWithIgnoreList(rayDown, { (game.Players.LocalPlayer :: Player).Character :: Model, workspace.CurrentCamera :: Camera })
+
+		local function onDeclineFriendButonPressed()
+			if LastSelectedPlayer then
+				Player:RevokeFriendship(LastSelectedPlayer)
+				hideFriendReportPopup()
+			end
+		end
+
+		local function onPrivilegeLevelSelect(player, rank)
+			while player.PersonalServerRank < rank do
+				PersonalServerService:Promote(player)
+			end
+			while player.PersonalServerRank > rank do
+				PersonalServerService:Demote(player)
+			end
+		end
+
+		local function createPersonalServerDialog(buttons, selectedPlayer)
+			local showPersonalServerRanks = IsPersonalServer and Player.PersonalServerRank >= PRIVILEGE_LEVEL.ADMIN and
+				Player.PersonalServerRank > selectedPlayer.PersonalServerRank
+			if showPersonalServerRanks then
+				table.insert(buttons, {
+					Name = "BanButton",
+					Text = "Ban",
+					OnPress = function()
+						hideFriendReportPopup()
+						onPrivilegeLevelSelect(selectedPlayer, PRIVILEGE_LEVEL.BANNED)
+					end,
+				})
+				table.insert(buttons, {
+					Name = "VistorButton",
+					Text = "Visitor",
+					OnPress = function()
+						onPrivilegeLevelSelect(selectedPlayer, PRIVILEGE_LEVEL.VISITOR)
+					end,
+				})
+				table.insert(buttons, {
+					Name = "MemberButton",
+					Text = "Member",
+					OnPress = function()
+						onPrivilegeLevelSelect(selectedPlayer, PRIVILEGE_LEVEL.MEMBER)
+					end,
+				})
+				table.insert(buttons, {
+					Name = "AdminButton",
+					Text = "Admin",
+					OnPress = function()
+						onPrivilegeLevelSelect(selectedPlayer, PRIVILEGE_LEVEL.ADMIN)
+					end,
+				})
+			end
+		end
